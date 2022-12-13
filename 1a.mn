@@ -10,6 +10,64 @@
 //
 //    f(x)  = x^2 - 3x + 2
 
-main {
-    1: do dec X goto 0
+operation zerar(A)
+{
+    1: if zero A then goto 0 else goto 2
+    2: do dec A goto 1
+}
+
+operation atribui3(A,B,C)
+{
+    1: do zerar(A) goto 2
+    2: do soma3(A,B,C) goto 0
+}
+
+operation atribui2(A,B)
+{
+    1: do zerar(A) goto 2
+    2: do soma2(A,B) goto 0
+}
+
+operation soma2(A,B)
+{
+    1: if zero B then goto 0 else goto 2
+    2: do dec B goto 3
+    3: do inc A goto 1
+}
+
+operation soma3(A,B,C){
+    1: if zero B then goto 5 else goto 2
+    2: do dec B goto 3
+    3: do inc A goto 4
+    4: do inc C goto 1
+    5: if zero C then goto 0 else goto 6
+    6: do dec C goto 7
+    7: do inc B goto 5
+}
+
+operation subtrai(A,B,C)
+{
+    1: do atribui2(C,B) goto 2
+    2: if zero C then goto 0 else goto 3
+    3: do dec C goto 4
+    4: do inc B goto 5
+    5: do dec A goto 2
+}
+
+main
+{
+    // y = 2
+  1: do inc Y goto 2
+  2: do inc Y goto 3
+
+    // e := x, a := x
+  3: do atribui3(E,X,F) goto 4
+  4: do atribui3(A,X,F) goto 5
+
+  5: do soma3(Y,X,C) goto 6
+  6: do dec E goto 7
+  7: if zero E then goto 8 else goto 5
+  8: do subtrai(Y,A,F) goto 9
+  9: do subtrai(Y,A,F) goto 10
+  10: do subtrai(Y,A,F) goto 0
 }
