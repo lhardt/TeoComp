@@ -16,18 +16,6 @@ operation zerar(A)
     2: do dec A goto 1
 }
 
-operation atribui3(A,B,C)
-{
-    1: do zerar(A) goto 2
-    2: do soma3(A,B,C) goto 0
-}
-
-operation atribui2(A,B)
-{
-    1: do zerar(A) goto 2
-    2: do soma2(A,B) goto 0
-}
-
 operation soma2(A,B)
 {
     1: if zero B then goto 0 else goto 2
@@ -44,6 +32,21 @@ operation soma3(A,B,C){
     6: do dec C goto 7
     7: do inc B goto 5
 }
+
+operation atribui3(A,B,C)
+{
+    1: do zerar(A) goto 2
+    2: do soma3(A,B,C) goto 0
+}
+
+
+operation atribui2(A,B)
+{
+    1: do zerar(A) goto 2
+    2: do soma2(A,B) goto 0
+}
+
+
 
 operation subtrai(A,B,C)
 {
