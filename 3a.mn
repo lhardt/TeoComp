@@ -1,0 +1,15 @@
+// MÁQUINA NORMA.
+// --------------------------------
+// Trabalho de Teoria da Computação
+// --------------------------------
+// Léo Hardt e Laura Ramos
+// 13/12/2022
+
+// Q3.a. Utilizando a codificação e a decodificação da questão 2,
+// implemente a seguinte função Natural -> Natural
+//
+//    f(x) = (x+y)^2
+
+main {
+    1: do dec X goto 0
+}

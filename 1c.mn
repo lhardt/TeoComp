@@ -1,0 +1,15 @@
+// MÁQUINA NORMA.
+// --------------------------------
+// Trabalho de Teoria da Computação
+// --------------------------------
+// Léo Hardt e Laura Ramos
+// 13/12/2022
+
+// Q1.c. Escrever um programa para implementar a seguinte função
+// de número Natural para Natural
+//
+//    f(x)  = 1 se x é multiplo de 3, senão 0
+
+main {
+    1: do dec X goto 0
+}

@@ -1,0 +1,14 @@
+// MÁQUINA NORMA.
+// --------------------------------
+// Trabalho de Teoria da Computação
+// --------------------------------
+// Léo Hardt e Laura Ramos
+// 13/12/2022
+
+// Q4.a Considere a sequência de Fibonacci, com F0=0, F1=1, ...,
+// F11 = 89. Construa um programa para a máquina Norma que tenha
+// o valor de f(x) = F(x) como função computada.
+
+main {
+    1: do dec X goto 0
+}

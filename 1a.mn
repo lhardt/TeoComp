@@ -1,0 +1,15 @@
+// MÁQUINA NORMA.
+// --------------------------------
+// Trabalho de Teoria da Computação
+// --------------------------------
+// Léo Hardt e Laura Ramos
+// 13/12/2022
+
+// Q1.a. Escrever um programa para implementar a seguinte função
+// de número Natural para Natural
+//
+//    f(x)  = x^2 - 3x + 2
+
+main {
+    1: do dec X goto 0
+}
