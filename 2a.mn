@@ -10,6 +10,83 @@
 //
 // Essa função deve preservar A e B.
 
-main {
-    1: do dec X goto 0
+// A := 0
+operation clear(A)
+{
+ 1: if zero A then goto 0 else goto 2
+ 2: do dec A goto 1
+}
+
+// A := A+B,  B := 0
+operation soma(A,B)
+{
+    1: if zero B then goto 0 else goto 2
+    2: do dec B goto 3
+    3: do inc A goto 1
+}
+
+operation load(A,B)
+{
+    1: do clear(A) goto 2
+    2: do soma(A,B) goto 0
+}
+
+
+// A := A + B,  B constante, C deve estar zerado
+operation soma(A,B,C)
+{
+  1: if zero B then goto 5 else goto 2
+  2: do dec B goto 3
+  3: do inc A goto 4
+  4: do inc C goto 1
+  5: if zero C then goto 0 else goto 6
+  6: do dec C goto 7
+  7: do inc B goto 5
+}
+
+// A := B,  B constante, C deve estar zerado
+operation load(A,B,C)
+{
+  1: do clear(A) goto 2
+  2: do soma(A,B,C) goto 0
+}
+
+// B := 2^A, usando I,J
+operation exp(A,B)
+{
+  1: do add B 2 goto 2
+  2: do add I 2 goto 3
+  3: do dec A goto 4
+  4: if zero A then goto 0 else goto 5
+  5: do soma(B,I,J) goto 6
+  6: do load(I,B,J) goto 7
+  7: do dec A goto 8
+  8: if zero A then goto 0 else goto 5
+}
+
+// A = B*C, usando K
+operation mult(A,B,C)
+{
+  1: do load(A,C,K) goto 2
+  2: do dec B goto 3
+  3: do soma(A,C,K) goto 4
+  4: do dec B goto 5
+  5: if zero B then goto 0 else goto 3
+}
+
+main
+{
+    // A = 2, B = 3 serao codificados
+    1: do add A 2 goto 2
+    2: do add B 3 goto 3
+
+    3: do load(D,B,E) goto 4
+    4: do load(E,B,F) goto 5
+    5: do load(F,A,G) goto 6
+    6: do soma(D,E) goto 7
+    7: do inc D goto 8
+    8: if zero A then goto 9 else goto 10
+    9: do load(C,D,G) goto 0
+    10: do exp(F,L) goto 11
+    11: do mult(C,D,L) goto 0
 }

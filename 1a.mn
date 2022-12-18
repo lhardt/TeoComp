@@ -10,12 +10,14 @@
 //
 //    f(x)  = x^2 - 3x + 2
 
+// A := 0
 operation zerar(A)
 {
     1: if zero A then goto 0 else goto 2
     2: do dec A goto 1
 }
 
+// A := A+B,  B := 0
 operation soma2(A,B)
 {
     1: if zero B then goto 0 else goto 2
@@ -23,6 +25,7 @@ operation soma2(A,B)
     3: do inc A goto 1
 }
 
+// A := A + B,  B constante, C deve estar zerado
 operation soma3(A,B,C){
     1: if zero B then goto 5 else goto 2
     2: do dec B goto 3
@@ -33,21 +36,21 @@ operation soma3(A,B,C){
     7: do inc B goto 5
 }
 
+// A := B, B constante, C deve estar zerado
 operation atribui3(A,B,C)
 {
     1: do zerar(A) goto 2
     2: do soma3(A,B,C) goto 0
 }
 
-
+// A := B, B := 0
 operation atribui2(A,B)
 {
     1: do zerar(A) goto 2
     2: do soma2(A,B) goto 0
 }
 
-
-
+// A := A-B (até 0), B constante, C deve estar zerado
 operation subtrai(A,B,C)
 {
     1: do atribui2(C,B) goto 2
@@ -59,18 +62,24 @@ operation subtrai(A,B,C)
 
 main
 {
-    // y = 2
-  1: do inc Y goto 2
-  2: do inc Y goto 3
+    //    f(x)  = x^2 - 3x + 2
 
-    // e := x, a := x
-  3: do atribui3(E,X,F) goto 4
-  4: do atribui3(A,X,F) goto 5
+    // Y = 2
+    1: do inc Y goto 2
+    2: do inc Y goto 3
 
-  5: do soma3(Y,X,C) goto 6
-  6: do dec E goto 7
-  7: if zero E then goto 8 else goto 5
-  8: do subtrai(Y,A,F) goto 9
-  9: do subtrai(Y,A,F) goto 10
-  10: do subtrai(Y,A,F) goto 0
+    // Variáveis Auxiliares:
+    // E := X, A := X
+    3: do atribui3(E,X,F) goto 4
+    4: do atribui3(A,X,F) goto 5
+
+    // Y += x^2
+    5: do soma3(Y,X,C) goto 6
+    6: do dec E goto 7
+    7: if zero E then goto 8 else goto 5
+
+    // Y -= 3X
+    8: do subtrai(Y,A,F) goto 9
+    9: do subtrai(Y,A,F) goto 10
+    10: do subtrai(Y,A,F) goto 0
 }

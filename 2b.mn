@@ -10,6 +10,93 @@
 //
 // Essa função deve preservar C.
 
-main {
-    1: do dec X goto 0
+// A := 0
+operation clear(A)
+{
+ 1: if zero A then goto 0 else goto 2
+ 2: do dec A goto 1
+}
+
+// A := A + B,  B constante, C deve estar zerado
+operation soma(A,B,C)
+{
+  1: if zero B then goto 5 else goto 2
+  2: do dec B goto 3
+  3: do inc A goto 4
+  4: do inc C goto 1
+  5: if zero C then goto 0 else goto 6
+  6: do dec C goto 7
+  7: do inc B goto 5
+}
+
+// A := B,  B constante, C deve estar zerado
+operation load(A,B,C)
+{
+  1: do clear(A) goto 2
+  2: do soma(A,B,C) goto 0
+}
+
+// A := A+B,  B := 0
+operation soma(A,B)
+{
+    1: if zero B then goto 0 else goto 2
+    2: do dec B goto 3
+    3: do inc A goto 1
+}
+
+// A := B,  B := 0
+operation load(A,B)
+{
+    1: do clear(A) goto 2
+    2: do soma(A,B) goto 0
+}
+
+// A := A/2,  C deve estar zerado
+operation div2(A,C)
+{
+  1: do load(C,A) goto 2
+  2: if zero C then goto 0 else goto 3
+  3: do dec C goto 4
+  4: if zero C then goto 0 else goto 5
+  5: do dec C goto 6
+  6: do inc A goto 2
+}
+
+// True se A divisivel por 2. A preservado,  C deve estar zerado
+test divBy2(A,C)
+{
+  1: do load(C,A) goto 2
+  2: if zero C then goto true else goto 3
+  3: do dec C goto 4
+  4: do inc A goto 5
+  5: if zero C then goto false else goto 6
+  6: do inc A goto 7
+  7: do dec C goto 2
+}
+
+// Primeiro valor da decodificacao.
+// A := log2(B). B := 0, E,F devem estar zerados.
+operation fst(A,B)
+{
+  1: if divBy2(B,E) then goto 2 else goto 0
+  2: do div2(B,F) goto 3
+  3: do inc A goto 1
+}
+
+// Segundo valor da decodificacao.
+// A := (B-1)/2.
+operation snd(A,B)
+{
+  1: do dec B goto 2
+  2: do div2(B,A) goto 3
+  3: do load(A,B) goto 0
+}
+
+main
+{
+  1: do add C 18 goto 2
+  2: do load(D,C,E) goto 3
+  3: do fst(A,D) goto 4
+  4: do add B 0 goto 5
+  5: do snd(B,D) goto 0
 }

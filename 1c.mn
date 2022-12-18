@@ -10,6 +10,21 @@
 //
 //    f(x)  = 1 se x é multiplo de 3, senão 0
 
-main {
-    1: do dec X goto 0
+// A := 0,  B :=  (1 se A divisivel por 3, senao 0)
+operation div(A,B)
+{
+  1: do dec A goto 2
+  2: if zero A then goto 0 else goto 3
+  3: do dec A goto 4
+  4: if zero A then goto 0 else goto 5
+  5: do dec A goto 6
+  6: if zero A then goto 7 else goto 1
+  7: do inc B goto 0
+}
+
+main
+{
+  1: if zero X then goto 3 else goto 2
+  2: do div(X,Y) goto 0
+  3: do inc Y goto 0
 }
