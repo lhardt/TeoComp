@@ -18,7 +18,7 @@ operation clear(A)
 }
 
 // A := A + B,  B constante, C deve estar zerado
-operation soma(A,B,C)
+operation soma3(A,B,C)
 {
   1: if zero B then goto 5 else goto 2
   2: do dec B goto 3
@@ -30,14 +30,14 @@ operation soma(A,B,C)
 }
 
 // A := B,  B constante, C deve estar zerado
-operation load(A,B,C)
+operation load3(A,B,C)
 {
   1: do clear(A) goto 2
-  2: do soma(A,B,C) goto 0
+  2: do soma3(A,B,C) goto 0
 }
 
 // A := A+B,  B := 0
-operation soma(A,B)
+operation soma2(A,B)
 {
     1: if zero B then goto 0 else goto 2
     2: do dec B goto 3
@@ -45,16 +45,16 @@ operation soma(A,B)
 }
 
 // A := B,  B := 0
-operation load(A,B)
+operation load2(A,B)
 {
     1: do clear(A) goto 2
-    2: do soma(A,B) goto 0
+    2: do soma2(A,B) goto 0
 }
 
 // A := A/2,  C deve estar zerado
 operation div2(A,C)
 {
-  1: do load(C,A) goto 2
+  1: do load2(C,A) goto 2
   2: if zero C then goto 0 else goto 3
   3: do dec C goto 4
   4: if zero C then goto 0 else goto 5
@@ -65,7 +65,7 @@ operation div2(A,C)
 // True se A divisivel por 2. A preservado,  C deve estar zerado
 test divBy2(A,C)
 {
-  1: do load(C,A) goto 2
+  1: do load2(C,A) goto 2
   2: if zero C then goto true else goto 3
   3: do dec C goto 4
   4: do inc A goto 5
@@ -89,14 +89,15 @@ operation snd(A,B)
 {
   1: do dec B goto 2
   2: do div2(B,A) goto 3
-  3: do load(A,B) goto 0
+  3: do load2(A,B) goto 0
 }
 
 main
 {
-  1: do add C 18 goto 2
-  2: do load(D,C,E) goto 3
-  3: do fst(A,D) goto 4
-  4: do add B 0 goto 5
-  5: do snd(B,D) goto 0
+  // O valor de X a ser decodificado
+  1: do load3(D,X,E) goto 2
+  2: do fst(A,D) goto 3
+  3: do snd(B,D) goto 0
+
+  // A partir daqui fariamos calculos com A, B.
 }
