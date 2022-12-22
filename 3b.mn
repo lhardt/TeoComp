@@ -10,6 +10,124 @@
 //
 //    f(x) = floor(x/y) se y>0   ou 0 se y=0
 
+// A := 0
+operation clear(A)
+{
+ 1: if zero A then goto 0 else goto 2
+ 2: do dec A goto 1
+}
+
+// A := A + B,  B constante, C deve estar zerado
+operation soma3(A,B,C)
+{
+  1: if zero B then goto 5 else goto 2
+  2: do dec B goto 3
+  3: do inc A goto 4
+  4: do inc C goto 1
+  5: if zero C then goto 0 else goto 6
+  6: do dec C goto 7
+  7: do inc B goto 5
+}
+
+// A := B,  B constante, C deve estar zerado
+operation load3(A,B,C)
+{
+  1: do clear(A) goto 2
+  2: do soma3(A,B,C) goto 0
+}
+
+// A := A+B,  B := 0
+operation soma2(A,B)
+{
+    1: if zero B then goto 0 else goto 2
+    2: do dec B goto 3
+    3: do inc A goto 1
+}
+
+// A := B,  B := 0
+operation load2(A,B)
+{
+    1: do clear(A) goto 2
+    2: do soma2(A,B) goto 0
+}
+
+// A := A/2,  C deve estar zerado
+operation div2(A,C)
+{
+  1: do load2(C,A) goto 2
+  2: if zero C then goto 0 else goto 3
+  3: do dec C goto 4
+  4: if zero C then goto 0 else goto 5
+  5: do dec C goto 6
+  6: do inc A goto 2
+}
+
+// True se A divisivel por 2. A preservado,  C deve estar zerado
+test divBy2(A,C)
+{
+  1: do load2(C,A) goto 2
+  2: if zero C then goto true else goto 3
+  3: do dec C goto 4
+  4: do inc A goto 5
+  5: if zero C then goto false else goto 6
+  6: do inc A goto 7
+  7: do dec C goto 2
+}
+
+// Primeiro valor da decodificacao.
+// A := log2(B). B := 0, E,F devem estar zerados.
+operation fst(A,B)
+{
+  1: if divBy2(B,E) then goto 2 else goto 0
+  2: do div2(B,F) goto 3
+  3: do inc A goto 1
+}
+
+// Segundo valor da decodificacao.
+// A := (B-1)/2.
+operation snd(A,B)
+{
+  1: do dec B goto 2
+  2: do div2(B,A) goto 3
+  3: do load2(A,B) goto 0
+}
+
+// A = B*C, usando K
+operation mult(A,B,C)
+{
+  1: do load3(A,C,K) goto 2
+  2: do dec B goto 3
+  3: do soma3(A,C,K) goto 4
+  4: do dec B goto 5
+  5: if zero B then goto 0 else goto 3
+}
+
+// A = floor(X/Y)
+operation divisao( A,  X, Y,   aux1, aux2)
+{
+    // Para arredondar para baixo, incrementamos em 1
+    1: do inc X goto 2
+
+    // Iremos decrementar Y de X usando aux1
+    2: do load3(aux1, Y, aux2) goto 3
+    3: do dec X goto 4
+    4: do dec aux1 goto 5
+    5: if zero aux1 then goto 6 else goto 3
+
+    // Se ainda tiver algum valor, entao incr A
+    //                 e continuamos a dividir.
+    6: if zero X then goto 0 else goto 7
+    7: do inc A goto 2
+}
+
 main {
-    1: do dec X goto 0
+    // O valor de X a ser decodificado
+    1: do load3(D,X,E) goto 2
+    2: do fst(A,D) goto 3
+    3: do snd(B,D) goto 4
+
+    4: if zero B then goto 0 else goto 5
+
+    //    f(x) = floor(x/y) se y>0   ou 0 se y=0
+    5: do divisao( Y, A, B,   K, L) goto 0
 }
