@@ -18,22 +18,22 @@ operation clear(A)
 }
 
 // A := A+B,  B := 0
-operation soma(A,B)
+operation soma2(A,B)
 {
     1: if zero B then goto 0 else goto 2
     2: do dec B goto 3
     3: do inc A goto 1
 }
 
-operation load(A,B)
+operation load2(A,B)
 {
     1: do clear(A) goto 2
-    2: do soma(A,B) goto 0
+    2: do soma2(A,B) goto 0
 }
 
 
 // A := A + B,  B constante, C deve estar zerado
-operation soma(A,B,C)
+operation soma3(A,B,C)
 {
   1: if zero B then goto 5 else goto 2
   2: do dec B goto 3
@@ -45,48 +45,69 @@ operation soma(A,B,C)
 }
 
 // A := B,  B constante, C deve estar zerado
-operation load(A,B,C)
+operation load3(A,B,C)
 {
   1: do clear(A) goto 2
-  2: do soma(A,B,C) goto 0
+  2: do soma3(A,B,C) goto 0
 }
 
 // B := 2^A, usando I,J
 operation exp(A,B)
 {
-  1: do add B 2 goto 2
-  2: do add I 2 goto 3
-  3: do dec A goto 4
-  4: if zero A then goto 0 else goto 5
-  5: do soma(B,I,J) goto 6
-  6: do load(I,B,J) goto 7
-  7: do dec A goto 8
-  8: if zero A then goto 0 else goto 5
+  1: do inc B goto 2
+  2: do inc B goto 3
+  3: do load3(I,B,Z) goto 4
+  4: do dec A goto 5
+  5: if zero A then goto 0 else goto 6
+  6: do soma3(B,I,J) goto 7
+  7: do load3(I,B,J) goto 8
+  8: do dec A goto 9
+  9: if zero A then goto 0 else goto 6
 }
 
 // A = B*C, usando K
 operation mult(A,B,C)
 {
-  1: do load(A,C,K) goto 2
+  1: do load3(A,C,K) goto 2
   2: do dec B goto 3
-  3: do soma(A,C,K) goto 4
+  3: do soma3(A,C,K) goto 4
   4: do dec B goto 5
   5: if zero B then goto 0 else goto 3
 }
 
+// Codifica um par A,B como a saida Y.
+operation cod(Y, A, B)
+{
+  // cod(a,b) = 2^a  * (2b + 1)
+  // D, E := B    F := A
+  1: do load3(D,B,E) goto 2
+  2: do load3(E,B,F) goto 3
+  3: do load3(F,A,G) goto 4
+
+  // D := 2b + 1
+  4: do soma2(D,E) goto 5
+  5: do inc D goto 6
+
+  // L := 2^a
+  6: if zero A then goto 7 else goto 8
+  7: do load3(Y,D,G) goto 0
+  8: do exp(F,L) goto 9
+
+  // Y := 2^a  * (2b + 1)  = D * L
+  9: do mult(Y,D,L) goto 0
+}
+
 main
 {
-    // A = 2, B = 3 serao codificados
-    1: do add A 2 goto 2
-    2: do add B 3 goto 3
+   // Fariamos operacoes com a entrada,
+   // e depois teriamos que codificar a,b.
 
-    3: do load(D,B,E) goto 4
-    4: do load(E,B,F) goto 5
-    5: do load(F,A,G) goto 6
-    6: do soma(D,E) goto 7
-    7: do inc D goto 8
-    8: if zero A then goto 9 else goto 10
-    9: do load(C,D,G) goto 0
-    10: do exp(F,L) goto 11
-    11: do mult(C,D,L) goto 0
+    // A = 2, B = 3 serao codificados
+    1: do inc A goto 2
+    2: do inc A goto 3
+    3: do inc B goto 4
+    4: do inc B goto 5
+    5: do inc B goto 6
+
+    6: do cod(Y, A,B) goto 0
 }
